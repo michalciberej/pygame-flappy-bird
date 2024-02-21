@@ -22,14 +22,17 @@ def main():
     window.fill((255,255,255))
     window.blit(BACKGROUND_IMAGE, (0,0))
     
+    user_input = pygame.key.get_pressed()
+    
     if len(ground) <= 2:
       ground.add(Ground(WIN_W, GROUND_POS_Y))
     
     ground.draw(window)
     bird.draw(window)
-    
-    ground.update()
-    bird.update()
+        
+    if bird.sprite.alive:
+      ground.update()
+      bird.update(user_input)
     
     clock.tick(60)
     pygame.display.update()
