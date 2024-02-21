@@ -13,6 +13,9 @@ def main():
   ground = pygame.sprite.Group()
   ground.add(Ground(GROUND_POS_X, GROUND_POS_Y))
   
+  bird = pygame.sprite.GroupSingle()
+  bird.add(Bird())
+  
   while True:
     quit_game()
     
@@ -23,8 +26,10 @@ def main():
       ground.add(Ground(WIN_W, GROUND_POS_Y))
     
     ground.draw(window)
+    bird.draw(window)
     
     ground.update()
+    bird.update()
     
     clock.tick(60)
     pygame.display.update()
