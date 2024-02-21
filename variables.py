@@ -1,2 +1,5 @@
 WIN_H = 720
 WIN_W = 521
+scroll_speed = 1
+GROUND_POS_X = 0
+GROUND_POS_Y = 520
