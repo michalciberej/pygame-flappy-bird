@@ -1,6 +1,6 @@
 import random
 import pygame
-from classes import Pipe
+from classes import Pipe, Bird
 from assets import TOP_PIPE_IMAGE, BOTTOM_PIPE_IMAGE
 
 
@@ -21,3 +21,10 @@ def spawn_pipes(pipes_group, pipes_spawn_timer):
     pipes_spawn_timer = random.randint(150, 250)
   pipes_spawn_timer -= 1
   return pipes_spawn_timer
+
+
+def check_colisions(bird, pipes, ground):
+    colision_pipes = pygame.sprite.spritecollide(bird.sprites()[0], pipes, False)
+    colision_ground = pygame.sprite.spritecollide(bird.sprites()[0], ground, False)
+    if colision_ground or colision_pipes:
+      bird.sprite.alive = False
