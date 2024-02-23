@@ -43,8 +43,10 @@ class Bird(pygame.sprite.Sprite):
       self.alive = False
     if self.velocity == 0:
       self.fly = False
+    if not self.alive:
+      self.image = BIRD_IMAGES[0]
     
-    if user_input[pygame.K_SPACE] and self.rect.y > TOP_BORDER and not self.fly:
+    if user_input[pygame.K_SPACE] and self.rect.y > TOP_BORDER and not self.fly and self.alive:
       self.fly = True
       self.velocity = -6
     
