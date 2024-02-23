@@ -1,6 +1,6 @@
 import pygame
-from helpers import quit_game, spawn_pipes
-from assets import BACKGROUND_IMAGE
+from helpers import quit_game, spawn_pipes, check_colisions
+from assets import BACKGROUND_IMAGE, GAMEOVER_IMAGE
 from variables import WIN_W, WIN_H, GROUND_POS_X, GROUND_POS_Y, WHITE_COLOR, score
 from classes import *
 
@@ -41,14 +41,24 @@ def main():
     score_text = font.render(str(score), True, pygame.Color(WHITE_COLOR))
     window.blit(score_text, (int(WIN_W / 2 - score_text.get_width() / 2), 20))
     
+    check_colisions(bird, pipes, ground)
+    
     if bird.sprite.alive:
       ground.update()
-      bird.update(user_input)
       pipes.update()
+    else:
+      window.blit(GAMEOVER_IMAGE, ((WIN_W / 2 - GAMEOVER_IMAGE.get_width() / 2), (WIN_H / 2 - GAMEOVER_IMAGE.get_height() / 2)))
+    bird.update(user_input)
+    
+    if user_input[pygame.K_r]:
+      score = 0
+      main()
+      break
     
     pipes_spawn_timer = spawn_pipes(pipes, pipes_spawn_timer)
     
     clock.tick(60)
     pygame.display.update()
+
 
 main()
