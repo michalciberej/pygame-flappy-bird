@@ -28,6 +28,7 @@ class Bird(pygame.sprite.Sprite):
     self.alive = True
     self.coins = 0
     self.score = 0
+    self.immunity = False
 
   def update(self, user_input):
     self.image_index += 1
@@ -45,7 +46,7 @@ class Bird(pygame.sprite.Sprite):
       self.alive = False
     if self.velocity == 0:
       self.fly = False
-    if not self.alive:
+    if not self.alive and not self.immunity:
       self.image = BIRD_IMAGES[0]
     
     if user_input[pygame.K_SPACE] and self.rect.y > TOP_BORDER and not self.fly and self.alive:
@@ -53,6 +54,7 @@ class Bird(pygame.sprite.Sprite):
       self.velocity = -6
     
     self.image = pygame.transform.rotate(self.image, self.velocity * -6)
+
 
 
 class Pipe(pygame.sprite.Sprite):
