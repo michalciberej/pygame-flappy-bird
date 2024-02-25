@@ -1,6 +1,6 @@
 import pygame
 import socket
-from data.helpers import quit_game, spawn_pipes, check_colisions, place_in_middle
+from data.helpers import quit_game, spawn_pipes_coins, check_colisions, place_in_middle
 from data.assets import BACKGROUND_IMAGE, GAMEOVER_IMAGE, GAMESTART_IMAGE
 from data.variables import WIN_W, WIN_H, GROUND_POS_X, GROUND_POS_Y, WHITE_COLOR, ORANGE_COLOR
 from data.classes import *
@@ -97,7 +97,7 @@ def main():
     coin_text = big_font.render(f"Coins: {bird.sprite.coins}", True, pygame.Color(WHITE_COLOR))
     window.blit(coin_text, (int(WIN_W // 2 - score_text.get_width() // 2), 60))
     
-    pipes_spawn_timer = spawn_pipes(pipes, pipes_spawn_timer, coins)
+    pipes_spawn_timer = spawn_pipes_coins(pipes, pipes_spawn_timer, coins)
     
     clock.tick(60)
     pygame.display.update()
