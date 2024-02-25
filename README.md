@@ -43,7 +43,7 @@ $ python3 main.py
 
 ## Project explanation
 
-[Link to video demo](www.youtube.com)
+[Link to video demo](https://youtu.be/ylYbhq_L4dY)
 
 ### Description
 
