@@ -13,7 +13,7 @@ def quit_game():
       exit()
 
 
-def spawn_pipes(pipes_group, pipes_spawn_timer, coins):
+def spawn_pipes_coins(pipes_group, pipes_spawn_timer, coins_group):
   if pipes_spawn_timer <= 0:
     x = 550
     gap = random.randint(80, 130)
@@ -21,7 +21,7 @@ def spawn_pipes(pipes_group, pipes_spawn_timer, coins):
     bottom_y = top_y + gap + BOTTOM_PIPE_IMAGE.get_height()
     pipes_group.add(Pipe(x, top_y, TOP_PIPE_IMAGE, "top"))
     pipes_group.add(Pipe(x, bottom_y, BOTTOM_PIPE_IMAGE, "bottom"))
-    coins.add(Coin((x + (TOP_PIPE_IMAGE.get_width() // 2)) - COIN_SIZE[0] // 2, top_y + TOP_PIPE_IMAGE.get_height() + gap // 2 - COIN_SIZE[1] // 2 ))
+    coins_group.add(Coin((x + (TOP_PIPE_IMAGE.get_width() // 2)) - COIN_SIZE[0] // 2, top_y + TOP_PIPE_IMAGE.get_height() + gap // 2 - COIN_SIZE[1] // 2 ))
     pipes_spawn_timer = random.randint(150, 250)
   pipes_spawn_timer -= 1
   return pipes_spawn_timer
@@ -51,6 +51,3 @@ def check_colisions(bird, pipes, ground, coins):
 
 def place_in_middle(image):
   return ((WIN_W / 2 - image.get_width() / 2), (WIN_H / 2 - image.get_height() / 2))
-
-def set_interval(callback, time):
-  Timer(time, callback).start()
