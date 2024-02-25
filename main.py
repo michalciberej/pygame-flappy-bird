@@ -1,25 +1,25 @@
 import pygame
+import socket
 from helpers import quit_game, spawn_pipes, check_colisions, place_in_middle
 from assets import BACKGROUND_IMAGE, GAMEOVER_IMAGE, GAMESTART_IMAGE
-from variables import WIN_W, WIN_H, GROUND_POS_X, GROUND_POS_Y, WHITE_COLOR
+from variables import WIN_W, WIN_H, GROUND_POS_X, GROUND_POS_Y, WHITE_COLOR, ORANGE_COLOR
 from classes import *
+from pymongo import DESCENDING
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 pygame.init()
 clock = pygame.time.Clock()
-font = pygame.font.SysFont("Segoe", 52)
+big_font = pygame.font.SysFont("Segoe", 52)
+small_font = pygame.font.SysFont("Segoe", 32)
+shadow_font = pygame.font.SysFont("Segoe", 36)
+border_font = pygame.font.SysFont("Segoe", 38)
 
 window = pygame.display.set_mode((WIN_W, WIN_H))
 uri = "mongodb+srv://test:test@cluster0.rhab7di.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 client = MongoClient(uri, server_api=ServerApi("1"))
-
-try:
-  client.admin.command("ping")
-  print(client.list_database_names)
-except Exception as e:
-  print(e)
+db = client.scores.score
 
 game_paused = True
 
@@ -36,6 +36,11 @@ def main():
   pipes_spawn_timer = 0
   
   coins = pygame.sprite.Group()
+  
+  user_name = socket.gethostname()
+  data_sent = False
+  leaderboard = []
+  player_scores = []
   
   while not game_paused:
     quit_game()
@@ -67,18 +72,31 @@ def main():
       ground.update()
       pipes.update()
     else:
+      if not data_sent and bird.sprite.score > 0:
+        db.insert_one({"user_name": user_name, "score": bird.sprite.score})
+        leaderboard = db.find().sort("score", DESCENDING).limit(10)
+        data_sent = True
+        
+      for index, player in enumerate(leaderboard):
+        index += 1
+        player_text = small_font.render(f"{index}. {player['user_name']} - {player['score']}", True, pygame.Color(ORANGE_COLOR))
+        player_scores.append(player_text)
+
       window.blit(GAMEOVER_IMAGE, place_in_middle(GAMEOVER_IMAGE) )
       if user_input[pygame.K_r]:
-        bird.sprite.coins = 0
-        bird.sprite.score = 0
         main()
         break
     bird.update(user_input)
     
-    score_text = font.render(f"Score: {str(bird.sprite.score)}", True, pygame.Color(WHITE_COLOR))
+    y = 400
+    for player in player_scores:
+      window.blit(player, (WIN_W // 2 - player_text.get_width() // 2, y))
+      y += 20
+    
+    score_text = big_font.render(f"Score: {str(bird.sprite.score)}", True, pygame.Color(WHITE_COLOR))
     window.blit(score_text, (int(WIN_W // 2 - score_text.get_width() // 2), 20))
     
-    coin_text = font.render(f"Coins: {bird.sprite.coins}", True, pygame.Color(WHITE_COLOR))
+    coin_text = big_font.render(f"Coins: {bird.sprite.coins}", True, pygame.Color(WHITE_COLOR))
     window.blit(coin_text, (int(WIN_W // 2 - score_text.get_width() // 2), 60))
     
     pipes_spawn_timer = spawn_pipes(pipes, pipes_spawn_timer, coins)
