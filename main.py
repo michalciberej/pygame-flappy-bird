@@ -1,9 +1,9 @@
 import pygame
 import socket
-from helpers import quit_game, spawn_pipes, check_colisions, place_in_middle
-from assets import BACKGROUND_IMAGE, GAMEOVER_IMAGE, GAMESTART_IMAGE
-from variables import WIN_W, WIN_H, GROUND_POS_X, GROUND_POS_Y, WHITE_COLOR, ORANGE_COLOR
-from classes import *
+from data.helpers import quit_game, spawn_pipes, check_colisions, place_in_middle
+from data.assets import BACKGROUND_IMAGE, GAMEOVER_IMAGE, GAMESTART_IMAGE
+from data.variables import WIN_W, WIN_H, GROUND_POS_X, GROUND_POS_Y, WHITE_COLOR, ORANGE_COLOR
+from data.classes import *
 from pymongo import DESCENDING
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -12,8 +12,6 @@ pygame.init()
 clock = pygame.time.Clock()
 big_font = pygame.font.SysFont("Segoe", 52)
 small_font = pygame.font.SysFont("Segoe", 32)
-shadow_font = pygame.font.SysFont("Segoe", 36)
-border_font = pygame.font.SysFont("Segoe", 38)
 
 window = pygame.display.set_mode((WIN_W, WIN_H))
 uri = "mongodb+srv://test:test@cluster0.rhab7di.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"

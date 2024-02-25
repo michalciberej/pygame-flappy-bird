@@ -1,9 +1,9 @@
 import random
 import pygame
 from threading import Timer
-from classes import Pipe, Coin
-from assets import TOP_PIPE_IMAGE, BOTTOM_PIPE_IMAGE
-from variables import WIN_H, WIN_W, COIN_SIZE
+from data.classes import Pipe, Coin
+from data.assets import TOP_PIPE_IMAGE, BOTTOM_PIPE_IMAGE
+from data.variables import WIN_H, WIN_W, COIN_SIZE
 
 
 def quit_game():

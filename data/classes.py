@@ -1,6 +1,6 @@
 import pygame
-from assets import GROUND_IMAGE, BIRD_IMAGES, COIN_IMAGES
-from variables import WIN_W, BIRD_START_POS_X, BIRD_START_POS_Y, BOTTOM_BORDER, TOP_BORDER, COIN_SIZE, SCROLL_SPEED
+from data.assets import GROUND_IMAGE, BIRD_IMAGES, COIN_IMAGES
+from data.variables import WIN_W, BIRD_START_POS_X, BIRD_START_POS_Y, BOTTOM_BORDER, TOP_BORDER, COIN_SIZE, SCROLL_SPEED
 
 class Ground(pygame.sprite.Sprite):
   def __init__(self, x, y):
