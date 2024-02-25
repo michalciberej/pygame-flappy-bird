@@ -1,5 +1,2 @@
 __pychache__/
 *.py[cod]
-build
-dist
-main.spec
